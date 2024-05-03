@@ -46,8 +46,15 @@ interface GameBoardProps {
 export default function GameBoard() {
     let { board, timerRunning, setBoardTile, setTimerState } = useGameOfLifeLogic(25, 25);
     return (
-        <Box>
-            <Box sx={{ border: '1px solid darkgreen' }}>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: "center"
+        }}>
+            <Box sx={{
+                border: '1px solid darkgreen'
+
+            }}>
                 {board.map((row, rowIndex) => {
                     return <Row key={'row ' + rowIndex}>
                         {row.map((square, squareIndex) => {
@@ -65,7 +72,7 @@ export default function GameBoard() {
             <Button
                 onClick={(e) => { setTimerState(); }}
                 variant="contained"
-                endIcon={timerRunning ? <Pause/> : < PlayArrow />}
+                endIcon={timerRunning ? <Pause /> : < PlayArrow />}
             >
                 {timerRunning ? 'Pause' : 'play'}
             </Button>
