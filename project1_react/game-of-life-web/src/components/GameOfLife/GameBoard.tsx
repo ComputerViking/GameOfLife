@@ -1,5 +1,5 @@
 'use client'
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import React, { ReactNode } from "react";
 import { useGameOfLifeLogic } from "./hooks/useGameOfLifeLogic";
 import { Pause, PlayArrow } from "@mui/icons-material";
@@ -44,16 +44,15 @@ interface GameBoardProps {
 }
 
 export default function GameBoard() {
-    let { board, timerRunning, setBoardTile, setTimerState } = useGameOfLifeLogic(25, 25);
+    let { board, timerRunning, setBoardTile, setTimerState } = useGameOfLifeLogic(20, 20);
     return (
         <Box sx={{
             display: 'flex',
-            flexDirection: 'column',
+            flexDirection: 'row',
             alignItems: "center"
         }}>
             <Box sx={{
-                border: '1px solid darkgreen'
-
+                border: '5px solid white'
             }}>
                 {board.map((row, rowIndex) => {
                     return <Row key={'row ' + rowIndex}>
@@ -69,16 +68,31 @@ export default function GameBoard() {
                     </Row>
                 })}
             </Box>
-            <Button
-                onClick={(e) => { setTimerState(); }}
-                variant="contained"
-                endIcon={timerRunning ? <Pause /> : < PlayArrow />}
-            >
-                {timerRunning ? 'Pause' : 'play'}
-            </Button>
-            <Box sx={{ border: '1px solid darkgreen' }}>
-                <Typography>Diections: Click to enable squares. Then press play</Typography>
-            </Box>
-        </Box>
+            <Card sx={{ 
+                    border: '5px solid lightgrey', 
+                    width: '200px', 
+                    minHeight: '810px', 
+                    paddingInline: '50px', 
+                    flex: 1 }}>
+                <CardContent>
+                    <Typography variant='h4'>Conway's game of life</Typography>
+                    <Typography variant="h5">Diections: Click to enable squares. Then press play</Typography>
+                    <Typography variant='caption'>Squares follow these rules.</Typography>
+                    <Typography>1. Any live cell with fewer than two live neighbors dies as if caused by under-population.</Typography>
+                    <Typography>2. Any live cell with two or three live neighbors lives on to the next generation.</Typography>
+                    <Typography>3. Any live cell with more than three live neighbors dies, as if by over-population.</Typography>
+                    <Typography>4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</Typography>
+                </CardContent>
+                <CardActionArea>
+                    <Button
+                        onClick={(e) => { setTimerState(); }}
+                        variant="contained"
+                        endIcon={timerRunning ? <Pause /> : < PlayArrow />}
+                    >
+                        {timerRunning ? 'Pause' : 'play'}
+                    </Button>
+                </CardActionArea>
+            </Card>
+        </Box >
     );
 }
